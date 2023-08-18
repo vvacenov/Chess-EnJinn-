@@ -1,6 +1,7 @@
 #pragma once
 #include "ChessBoard.h"
 #include "EventHandler.h"
+#include "Sprites.h"
 #include <vector>
 #include <map>
 
@@ -37,10 +38,19 @@ private:
 
 	//chessboard
 	ChessBoard chessboardField;
+	Sprites sprite;
 	FieldData fd;
+
 
 	std::vector <std::vector<sf::RectangleShape>> chessBoard;
 	std::vector <std::vector<FieldData>> fieldData;
+	
+
+	unsigned int initialWindowWidth;
+	unsigned int initialWindowHeight;
+	//sizes
+	int fieldHeight;
+	int fieldWidth;
 
 	int padding = 20;
 
@@ -55,6 +65,9 @@ private:
 	//render window loop
 	void renderBoard();
 	void renderLoop();
+
+	//render pieces
+	void initSprites();
 
 	void gameLoop();
 	

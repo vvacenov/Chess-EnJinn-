@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Drawables_resources">
-      <UniqueIdentifier>{b665084b-bbe7-46a2-8e87-555123452e1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Drawables_resources">
       <UniqueIdentifier>{00154585-903f-48d5-927e-889d770e7560}</UniqueIdentifier>
     </Filter>
@@ -37,16 +34,19 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{49aeb1e5-5fda-4ddf-997e-040a1cd4e9f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events\Drawables_resources">
+      <UniqueIdentifier>{b665084b-bbe7-46a2-8e87-555123452e1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChessBoard.h">
-      <Filter>Header Files\Drawables_resources</Filter>
+      <Filter>Header Files\Events\Drawables_resources</Filter>
     </ClInclude>
     <ClInclude Include="RenderController.h">
       <Filter>Header Files\DrawGUI</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
-      <Filter>Header Files\Drawables_resources</Filter>
+      <Filter>Header Files\Events\Drawables_resources</Filter>
     </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>Header Files\Events</Filter>

@@ -6,6 +6,7 @@ RenderController::RenderController()
 	initFieldData();
 	setupWindow();
 	renderLoop();
+	
 }
 
 //function to draw chess board out of sf::RectangleShapes
@@ -13,6 +14,10 @@ void RenderController::initBoard()
 {
 	std::vector<sf::RectangleShape> row;
 	row.reserve(8);
+	//sizes
+	fieldHeight = 100;
+	fieldWidth = 100;
+
 	int rowOffestY = 100;
 
 	for (int i = 0; i < 8; i++)
@@ -23,6 +28,7 @@ void RenderController::initBoard()
 
 			sf::RectangleShape localField = chessboardField.getField(fieldColorID);
 			localField.setPosition((i + 1) * 100, (j * 100) + padding);
+			localField.setSize(sf::Vector2f(fieldHeight, fieldWidth));
 			row.push_back(localField);
 			std::cout << row[j].getPosition().y;
 		}
@@ -52,13 +58,13 @@ void RenderController::initFieldData()
 			{
 				switch (j)
 				{
-				case 0: case 7:
+				case 0: 
 					fd.pieceID = static_cast<int>(Pieces::whiteRook);
 					break;
-				case 1: case 6:
+				case 1: 
 					fd.pieceID = static_cast<int>(Pieces::whiteKnight);
 					break;
-				case 2: case 5:
+				case 2: 
 					fd.pieceID = static_cast<int>(Pieces::whiteBishop);
 					break;
 				case 3:
@@ -87,13 +93,13 @@ void RenderController::initFieldData()
 			{
 				switch (j)
 				{
-				case 0: case 7:
+				case 7:
 					fd.pieceID = static_cast<int>(Pieces::blackRook);
 					break;
-				case 1: case 6:
+				case 6:
 					fd.pieceID = static_cast<int>(Pieces::blackKnight);
 					break;
-				case 2: case 5:
+				case 5:
 					fd.pieceID = static_cast<int>(Pieces::blackBishop);
 					break;
 				case 3:
@@ -117,8 +123,8 @@ void RenderController::initFieldData()
 // create render window
 void RenderController::setupWindow()
 {
-	unsigned int initialWindowWidth = 1200;
-	unsigned int initialWindowHeight = 800 + (2 * padding);
+	initialWindowWidth = 1200;
+	initialWindowHeight = 800 + (2 * padding);
 
 	renderWindow.create(sf::VideoMode(initialWindowWidth, initialWindowHeight), "Chess Jinn!");
 	renderWindow.setSize(sf::Vector2u(initialWindowWidth, initialWindowHeight));
@@ -129,7 +135,7 @@ void RenderController::renderLoop()
 {
 	sf::Event event;
 
-	EventHandler eventHandler(event, renderWindow, chessBoard);
+	EventHandler eventHandler(event, renderWindow, chessBoard, padding, initialWindowHeight, fieldHeight, fieldWidth);
 
 	while (renderWindow.isOpen())
 	{
@@ -140,8 +146,18 @@ void RenderController::renderLoop()
 			{
 				eventHandler.windowClose();
 			}
+
+			switch (event.type)
+
+			case sf::Event::Resized:
+			{
+				eventHandler.handleWindowEvents();
+				eventHandler.resetResizeFlag();
+				break;
+			}
+
 		}
-		
+
 
 		renderWindow.clear();
 		renderBoard();
@@ -152,17 +168,32 @@ void RenderController::renderLoop()
 //render board
 void RenderController::renderBoard()
 {
+	Sprites& spritesRef = sprite;
 	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 8; j++)
 		{
 			renderWindow.draw(chessBoard[i][j]);
+			
+			if (fieldData[i][j].pieceID == 1)
+			{
+				spritesRef.whitePawn.setPosition(fieldData[i][j].fieldPosition.x, fieldData[i][j].fieldPosition.y);
+				spritesRef.whitePawn.setScale(0.53, 0.53);
+				renderWindow.draw(spritesRef.whitePawn);
+			}
 		}
 	}
 }
 
 
+//render pieces
 
+void RenderController::initSprites()
+{
+
+
+
+}
 
 
 

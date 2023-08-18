@@ -17,11 +17,15 @@ public:
 	void handleMouseEvents();
 	void windowClose();
 
-	EventHandler(sf::Event& event, sf::RenderWindow& renderWindow, std::vector<std::vector<sf::RectangleShape>>& chessBoard) 
+	EventHandler(sf::Event& event, sf::RenderWindow& renderWindow, std::vector<std::vector<sf::RectangleShape>>& chessBoard, int padding, unsigned int initialWindowHeight, int fieldHeight, int fieldWidth)
 		: 
 		_event(event), 
 		_renderWindow(renderWindow), 
-		_chessBoard(chessBoard) 
+		_chessBoard(chessBoard),
+		_padding(padding),
+		_initialWindowHeight(initialWindowHeight),
+		_fieldHeight(fieldHeight),
+		_fieldWidth(fieldWidth)
 	{};
 
 private:	
@@ -34,7 +38,10 @@ private:
 	bool mouseEventFlag = false;
 	bool windowCloseFlag = false;
 
-
-	
+	int _padding;
+	unsigned int _initialWindowHeight;
+	float _fieldHeight;
+	float _fieldWidth;
+		
 };
 

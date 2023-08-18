@@ -9,10 +9,6 @@ ChessBoard::ChessBoard()
 
 void ChessBoard::initVariables()
 {	
-	//sizes
-	fieldHeight = 100;
-	fieldWidth = 100;
-
 	//colors
 	whiteColor[0] = 240;
 	whiteColor[1] = 215;
@@ -25,10 +21,9 @@ void ChessBoard::initVariables()
 
 void ChessBoard::initFields()
 {
-	whiteField.setSize(sf::Vector2f(fieldHeight, fieldWidth));
+	
 	whiteField.setFillColor(sf::Color(whiteColor[0], whiteColor[1], whiteColor[2]));
 
-	blackField.setSize(sf::Vector2f(fieldHeight, fieldWidth));
 	blackField.setFillColor(sf::Color(blackColor[0], blackColor[1], blackColor[2]));
 }
 
