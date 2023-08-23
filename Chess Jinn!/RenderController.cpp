@@ -254,7 +254,7 @@ sf::Sprite RenderController::UpdateSprite(sf::Sprite& sprite, int i, int j, floa
 	return sprite;
 }
 
-//render board
+
 //render board
 void RenderController::renderBoard()
 {
