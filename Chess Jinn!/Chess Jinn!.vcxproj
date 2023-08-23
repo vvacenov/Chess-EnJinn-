@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChessBoard.h" />
+    <ClInclude Include="FieldData.h" />
     <ClInclude Include="RenderController.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameController.h" />

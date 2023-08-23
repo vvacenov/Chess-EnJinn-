@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <memory>
 #include <SFML/graphics.hpp>
+#include "FieldData.h"
+
+
 
 class EventHandler
 {
@@ -14,10 +19,11 @@ public:
 	void resetMouseFlag() { mouseEventFlag = false; }
 
 	void handleWindowEvents();
-	void handleMouseEvents();
+	void handleMouseEvents(const sf::Event& m_event);
 	void windowClose();
 
-	EventHandler(sf::Event& event, sf::RenderWindow& renderWindow, std::vector<std::vector<sf::RectangleShape>>& chessBoard, int padding, unsigned int initialWindowHeight, int fieldHeight, int fieldWidth)
+	
+	EventHandler(sf::Event& event, sf::RenderWindow& renderWindow, std::vector<std::vector<sf::RectangleShape>>& chessBoard, int padding, unsigned int initialWindowHeight, int fieldHeight, int fieldWidth, std::vector <std::vector<FieldData>>& fieldData, std::shared_ptr<std::vector<std::vector<sf::Sprite>>> sprites)
 		: 
 		_event(event), 
 		_renderWindow(renderWindow), 
@@ -25,7 +31,11 @@ public:
 		_padding(padding),
 		_initialWindowHeight(initialWindowHeight),
 		_fieldHeight(fieldHeight),
-		_fieldWidth(fieldWidth)
+		_fieldWidth(fieldWidth),
+		_fieldData(fieldData),
+		shared_spritesVec(sprites)
+
+
 	{};
 
 private:	
@@ -33,15 +43,21 @@ private:
 	sf::Event& _event;
 	sf::RenderWindow& _renderWindow;
 	std::vector<std::vector<sf::RectangleShape>>& _chessBoard;
+	std::vector<std::vector<FieldData>>& _fieldData;
+	std::shared_ptr<std::vector<std::vector<sf::Sprite>>> shared_spritesVec;
+	sf::Sprite* currentPiece = nullptr;
+	sf::Vector2f originalPosition;
+	sf::Vector2f mouseOffset;
 
 	bool windowEventFlag = false;
 	bool mouseEventFlag = false;
 	bool windowCloseFlag = false;
+	bool dragging = false;
 
 	int _padding;
 	unsigned int _initialWindowHeight;
 	float _fieldHeight;
 	float _fieldWidth;
-		
+			
 };
 
