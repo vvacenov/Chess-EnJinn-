@@ -7,7 +7,7 @@ RenderController::RenderController()
 	spritesVec = std::make_shared<std::vector<std::vector<sf::Sprite>>>(8, std::vector<sf::Sprite>(8));
 	createSpritesVec();
 	setupWindow();
-	renderLoop();
+	
 
 }
 
@@ -165,19 +165,21 @@ void RenderController::renderLoop()
 			switch (event.type)
 			{
 			case sf::Event::Resized:
-
-				generateFieldData();
+							
 				eventHandler.handleWindowEvents();
 				
-				eventHandler.resetResizeFlag();
+				createSpritesVec();
+				
 				break;
 			}
 			renderWindow.clear();
 
-			renderBoard();
+			
 			eventHandler.handleMouseEvents(event);
-
+			
+			renderBoard();
 			renderSprites();
+			
 			renderWindow.display();
 					
 		}

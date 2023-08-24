@@ -26,7 +26,8 @@ class RenderController
 public:
 
 	RenderController();
-	
+	void renderLoop();
+
 private:
 	// render
 	sf::RenderWindow renderWindow;
@@ -65,7 +66,7 @@ private:
 	//render window loop
 	void renderBoard();
 	void renderSprites();
-	void renderLoop();
+
 	
 
 	//render pieces

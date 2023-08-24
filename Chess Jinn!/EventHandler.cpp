@@ -29,7 +29,9 @@ void EventHandler::handleWindowEvents()
 		for (int j = 0; j < _chessBoard[i].size(); j++)
 		{
 			_chessBoard[i][j].setSize(sf::Vector2f(_fieldHeight * scaleFactorY, _fieldWidth * scaleFactorY));
+			_fieldData[i][j].fieldScale = _chessBoard[i][j].getScale();
 			_chessBoard[i][j].setPosition((j * 100 * scaleFactorY) + 100, (i * 100 * scaleFactorY) + _padding);
+			_fieldData[i][j].fieldPosition = _chessBoard[i][j].getPosition();
 		}
 }
 
@@ -37,12 +39,15 @@ void EventHandler::handleMouseEvents(const sf::Event& m_event)
 {
 	_event = m_event;
 	mouseEventFlag = true;
+	
+	eventMouseClick();
+	eventMouseMove();
+	eventMouseRelease();
+}
 
-	int originRow;
-	int originCol;
+void EventHandler::eventMouseClick()
 
-
-
+{
 	if (_event.type == sf::Event::MouseButtonPressed && _event.mouseButton.button == sf::Mouse::Left)
 	{
 		auto mouse_pos = sf::Mouse::getPosition(_renderWindow);
@@ -55,6 +60,7 @@ void EventHandler::handleMouseEvents(const sf::Event& m_event)
 				if ((*shared_spritesVec)[i][j].getGlobalBounds().contains(mouse_pos.x, mouse_pos.y))
 				{
 					dragging = true;
+					updateFieldDataOnClick(i, j);
 					mouseOffset.x = mouse_pos.x - (*shared_spritesVec)[i][j].getPosition().x;
 					mouseOffset.y = mouse_pos.y - (*shared_spritesVec)[i][j].getPosition().y;
 					currentPiece = &(*shared_spritesVec)[i][j];
@@ -65,7 +71,12 @@ void EventHandler::handleMouseEvents(const sf::Event& m_event)
 			if (dragging) break;
 		}
 	}
-	 if (_event.type == sf::Event::MouseMoved && dragging)
+}
+
+
+void EventHandler::eventMouseMove()
+{
+	if (_event.type == sf::Event::MouseMoved && dragging)
 	{
 		auto mouse_pos = sf::Mouse::getPosition(_renderWindow);
 		if (currentPiece != nullptr)
@@ -77,6 +88,11 @@ void EventHandler::handleMouseEvents(const sf::Event& m_event)
 			std::cout << "currentPiece je nullptr";
 		}
 	}
+}
+
+void EventHandler::eventMouseRelease()
+{
+
 	if (_event.type == sf::Event::MouseButtonReleased && _event.mouseButton.button == sf::Mouse::Left)
 	{
 		dragging = false;
@@ -86,35 +102,51 @@ void EventHandler::handleMouseEvents(const sf::Event& m_event)
 			int closestRow = -1;
 			int closestCol = -1;
 
-			// Prolazimo kroz sva polja i tražimo najbliže.
+
 			for (int i = 0; i < _fieldData.size(); i++)
 			{
 				for (int j = 0; j < _fieldData[i].size(); j++)
 				{
-					float distance = std::sqrt(
-						std::pow(currentPiece->getPosition().x - _fieldData[i][j].fieldPosition.x, 2) +
-						std::pow(currentPiece->getPosition().y - _fieldData[i][j].fieldPosition.y, 2)
-					);
+
+
+					float distance = std::sqrt(std::pow(currentPiece->getPosition().x - _fieldData[i][j].fieldPosition.x, 2)
+						+ std::pow(currentPiece->getPosition().y - _fieldData[i][j].fieldPosition.y, 2));
 
 					if ((distance < minDistance) && _fieldData[i][j].pieceID == -1)
 					{
 						minDistance = distance;
 						closestRow = i;
 						closestCol = j;
+						updateFieldDataOnRelease(i, j);						
 					}
 				}
 			}
 
-			
-			if (closestRow != -1 && closestCol != -1 )
-			{
-				currentPiece->setPosition(_fieldData[closestRow][closestCol].fieldPosition);
-							
-			}
+			if (closestRow != -1 && closestCol != -1)
+				if (_fieldData[closestRow][closestCol].pieceID == -1)  // Provjerite je li ploèa prazna
+				{
+					currentPiece->setPosition(_fieldData[closestRow][closestCol].fieldPosition);
+				}
+				else
+				{
+					// Ovdje možete postaviti logiku za povratak figure na originalnu poziciju
+					// ili obavijestiti korisnika da potez nije dozvoljen
+				}
+
 		}
 	}
+}
+
+void EventHandler::updateFieldDataOnClick(int i, int j)
+{
+	
+	originalPieceID = _fieldData[i][j].pieceID;
+	_fieldData[i][j].pieceID = -1;
 
 }
 
-
-
+void EventHandler::updateFieldDataOnRelease(int closestRow, int closestCol)
+{
+	_fieldData[closestRow][closestCol].pieceID = originalPieceID;
+	originalPieceID = -1;
+}

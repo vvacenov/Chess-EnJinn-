@@ -55,9 +55,16 @@ private:
 	bool dragging = false;
 
 	int _padding;
+	int originalPieceID = -1;
 	unsigned int _initialWindowHeight;
 	float _fieldHeight;
 	float _fieldWidth;
-			
+
+	void eventMouseClick();
+	void eventMouseMove();
+	void eventMouseRelease();
+	void updateFieldDataOnClick(int i, int j);
+	void updateFieldDataOnRelease(int closestRow, int closestCol);
+
 };
 

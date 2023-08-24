@@ -3,7 +3,9 @@
 
 class GameController
 {
-
-
+	RenderController r;
+	
+public:
+	GameController() { r.renderLoop(); }
 };
 

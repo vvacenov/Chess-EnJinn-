@@ -1,7 +1,7 @@
-#include "RenderController.h"
+#include "GameController.h"
 
 int main(void)
 {
-	RenderController d;
+	GameController s;
 	return 0;
 } 
