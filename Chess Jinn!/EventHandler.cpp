@@ -123,14 +123,13 @@ void EventHandler::eventMouseRelease()
 			}
 
 			if (closestRow != -1 && closestCol != -1)
-				if (_fieldData[closestRow][closestCol].pieceID == -1)  // Provjerite je li ploèa prazna
+				if (_fieldData[closestRow][closestCol].pieceID == -1)  // Provjerite je li ploÃ¨a prazna
 				{
 					currentPiece->setPosition(_fieldData[closestRow][closestCol].fieldPosition);
 				}
 				else
 				{
-					// Ovdje možete postaviti logiku za povratak figure na originalnu poziciju
-					// ili obavijestiti korisnika da potez nije dozvoljen
+					
 				}
 
 		}
